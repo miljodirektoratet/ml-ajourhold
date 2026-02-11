@@ -1,0 +1,116 @@
+[project]
+name = "ml-ajourhold"
+description = "A Python project for detecting landcover changes using machine learning. It identifies landscape modifications that are not yet reflected in national geospatial datasets, such as newly built infrastructure."
+license = "MIT"
+readme = "README.md"
+authors = [
+  {name = "Willeke A'Campo", email = "willeke.acampo@miljodir.no"}
+]
+requires-python = ">=3.12"
+dependencies = []
+dynamic = ["version"]
+
+[project.scripts]
+ml-ajourhold = "ml_ajourhold:main"
+
+[dependency-groups]
+dev = [
+  "deptry>=0.23.1",
+  "ipykernel>=6.29.5,<8",
+  "mypy>=1.18.2",
+  "pip>=25.2",
+  "pre-commit>=4.3.0",
+  "pytest>=8.4.2",
+  "pytest-cov>=7.0.0",
+  "ruff>=0.13.3",
+  "safety>=3.6.2",
+  "setuptools-scm>=9.2.0",
+  "zizmor>=1.14.2",
+]
+
+[build-system]
+requires = ["setuptools>=61", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where =["src"]
+include = ["ml_ajourhold*"]
+
+# SETUPTOOLS-SCM config (dynamic versioning)
+[tool.setuptools_scm]
+write_to = "src/ml_ajourhold/_version.py"
+fallback_version = "0.0.0"
+
+# DEPTRY config
+[tool.deptry]
+known_first_party = ["ml_ajourhold"]  # ignore local package
+
+# PYTEST config
+[tool.pytest]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+  "ci_exclude: Tests excluded from CI/CD pipeline"
+]
+addopts = [
+  "--cov=src",
+  "--cov-report=term",
+  "--cov-report=xml:coverage.xml"
+]
+
+# RUFF Rules
+[tool.ruff]
+exclude = [
+    "dump",
+    "tmp",
+]
+
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E4",    # pycodestyle: indentation errors
+    "E7",    # pycodestyle: statements and control flow
+    "E9",    # pycodestyle: runtime errors
+    "F",     # pyflakes: code correctness
+    "B",     # flake8-bugbear: likely bugs and design problems
+    "ERA",   # eradicate: commented-out code
+    "D",     # pydocstyle: docstring conventions
+    "N"      # pep8-naming: naming conventions
+]
+
+ignore = [
+    "D107",   # pydocstyle: Missing docstring in __init__
+    "D213",   # pydocstyle: Multi-line summary should start at the second line
+    "E501",   # pycodestyle: Line too long
+    "F401",   # pyflakes: Module imported but unused
+    "D417",   # pydocstyle: Missing argument descriptions in docstrings
+    "ERA001"  # eradicate: Commented out code
+]
+
+unfixable = [
+    "B"   # flake8-bugbear
+]
+
+[tool.ruff.lint.extend-per-file-ignores]
+"__init__.py" = ["E", "D"]
+"tests/*.py" = ["D"]
+"**/*.ipynb" = ["D"]
+"scripts/*.py" = ["D"]
+
+[tool.ruff.format]
+indent-style = "space"
+docstring-code-format = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+# SAFETY config
+[tool.safety]
+full-report = true
+ignore_scopes = []  # e.g. ignore "dev-dependencies"
+ignore_vulnerabilities = []  # ignore specific vulnerabilities (only after review!)
+output = "json"

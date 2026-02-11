@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/dev.Dockerfile
+
+    # https://docs.astral.sh/uv/guides/integration/docker/#developing-in-a-container
+    volumes:
+    - ..:/workspaces:cached   # Bind mount: sync project files
+    - /workspaces/ml-ajourhold/.venv   # Anonymous volume: ensure .venv is not overwritten by bind mount
+    - uv-cache:/root/.cache/uv   # Named volume: persist UV cache between container restarts
+
+    # Override the default command to keep the container running
+    command: sleep infinity
+
+    # Environment variables for development
+    environment:
+    - PYTHONPATH=/workspaces/ml-ajourhold
+    - UV_PROJECT_ENVIRONMENT=/workspaces/ml-ajourhold/.venv
+
+    # Optional: expose ports if your application serves HTTP
+    # ports:
+    #   - "8000:8000"
+
+# Named volumes
+volumes:
+  uv-cache:

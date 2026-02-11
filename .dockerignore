@@ -1,0 +1,51 @@
+# Exclude the project virtual environment from image builds
+.venv
+
+# Build artifacts and caches
+dist/
+build/
+*.egg-info/
+__pycache__/
+
+# Development and testing files
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# Git and version control
+.git/
+.gitignore
+
+# Documentation
+docs/
+*.md
+{% if include_notebooks -%}
+
+# Jupyter notebooks (exclude from production builds)
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+{% endif %}
+
+# Development configuration
+.vscode/
+.devcontainer/
+.pre-commit-config.yaml
+Taskfile.yml
+
+# Environment and secrets
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.log

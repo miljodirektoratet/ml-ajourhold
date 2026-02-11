@@ -1,0 +1,69 @@
+// Local VS Code Extension Configurations
+// Not used by Devcontainer instead configs are listed in .devcontainer/devcontainer.json
+{
+  // Python interpreter and tools
+  // UV PATH WINDOWS: ${workspaceFolder}/.venv/Scripts/python
+	// UV PATH LINUX/MAC: ${workspaceFolder}/.venv/bin/python
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "mypy-type-checker.interpreter": ["${workspaceFolder}/.venv/bin/python"],
+  "ruff.interpreter": ["${workspaceFolder}/.venv/bin/python"],
+
+  // Formatting
+  "editor.defaultFormatter": "charliermarsh.ruff",
+  "editor.formatOnSave": true,
+  "notebook.formatOnSave.enabled": true,
+  "ruff.format.preview": false,
+  "ruff.organizeImports": true,
+
+  // Editor rulers
+  "editor.rulers": [
+    { "column": 78, "color": "#737171" },
+    { "column": 88, "color": "#2affa3" }
+  ],
+
+  // Python analysis and debugging
+  "python.analysis.autoImportCompletions": true,
+  "debugpy.showPythonInlineValues": true,
+  "github.copilot.enable": {
+    "scminput": true
+  },
+
+  // Copilot
+  "github.copilot.chat.languageContext.inline.typescript.enabled": true,
+  "github.copilot.chat.languageContext.fix.typescript.enabled": true,
+  "github.copilot.chat.generateTests.codeLens": true,
+  "github.copilot.chat.edits.temporalContext.enabled": true,
+  "github.copilot.chat.editor.temporalContext.enabled": true,
+  "github.copilot.advanced": {
+    "length": 500, // maximum length of generated responses
+    "temperature": 0.1 // most conservative answers
+  },
+
+  // Color customizations
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#312360",
+    "titleBar.activeBackground": "#443186",
+    "titleBar.activeForeground": "#FAF9FD"
+  },
+
+  // Python formatting and testing
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "python.analysis.extraPaths": [],
+  "autoDocstring.docstringFormat": "one-line-sphinx",
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.cwd": "${workspaceFolder}",
+  "jupyter.interactiveWindow.cellMarker.codeRegex": "^# COMMAND ----------|^# Databricks notebook source|^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])",
+  "jupyter.interactiveWindow.cellMarker.default": "# COMMAND ----------",
+
+  // Markdown Table of Contents settings
+  "markdown.extension.toc.levels": "2..2",
+  "markdown.extension.toc.updateOnSave": true,
+
+  // git
+  "git.branchProtection": ["main"],
+  "git.allowNoVerifyCommit": true
+}
