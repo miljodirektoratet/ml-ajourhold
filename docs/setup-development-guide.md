@@ -287,22 +287,61 @@ pre-commit install  # Reinstall hooks
 
 ### 5. Deploy (Maintainers Only)
 
-**Create a Release**:
+**Step 1: Create Release and Deploy**
 
 ```bash
-# Tag new version
-task tag
-
-# Create release PR
-git checkout release/v0.x.x
-git push origin release/v0.x.x
+# Create release branch, tag, trigger deployment, and open PR
+task release VERSION=v1.0.0
 ```
 
-**Deployment Process**:
-- Create PR from `release/v0.x.x` to `main`
-- Merge triggers CD workflows:
-  - **CD Python**: Publishes to Test PyPI
-  - **CD Docker**: Pushes to GitHub Container Registry
+This command:
+1. Creates release branch `release/v1.0.0`
+2. Pushes the branch to origin
+3. Tags the release branch with `v1.0.0`
+4. Pushes the tag (triggers CD workflows)
+5. Opens PR from `release/v1.0.0` to `main`
+
+**Step 2: Monitor Deployment**
+
+Check GitHub Actions to monitor:
+- **CD Python**: Publishes to Test PyPI
+- **CD Docker**: Pushes to GitHub Container Registry
+
+**Step 3: Merge PR**
+
+If deployment succeeds:
+1. Review the auto-created PR
+2. Merge to `main`
+3. Release branch auto-deletes
+
+If deployment fails:
+1. Fix issues on release branch
+2. Delete old tag: `git tag -d v1.0.0 && git push origin :refs/tags/v1.0.0`
+3. Re-tag: `git tag v1.0.0 && git push origin v1.0.0`
+4. Monitor CD workflows again
+
+**Revert a Release**:
+
+*Before merge to main:*
+
+```bash
+# Delete tag (stops/prevents deployment)
+git tag -d v1.0.0
+git push origin :refs/tags/v1.0.0
+
+# Delete release branch
+git checkout main
+git branch -D release/v1.0.0
+git push origin --delete release/v1.0.0
+```
+
+*After deployment:*
+
+> [!WARNING]
+> Deleting a tag after deployment won't unpublish packages. You'll need to:
+> - Manually remove/yank from Test PyPI
+> - Delete container images from GHCR
+> - Or publish a new version to supersede it
 
 ### 6. Clean Up
 

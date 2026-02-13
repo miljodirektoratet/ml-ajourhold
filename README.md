@@ -129,7 +129,7 @@ The development workflow used for this repo consists of the following steps:
       ```
 
    4. **Integrate**: Push branch to GitHub, create a Pull Request to `main`, check GitHub Actions, await review and merge. Tip: if you want to commit without running pre-commit hooks, you can use `git commit --no-verify` or in VS Code navigate to `Source Control` > `...` > `Commit (no verify)`.
-   5. **Deploy**: Deployment of a new package and container image is done by the *Repository Maintainers*. To trigger a new release, create a version tag (e.g., `v0.0.1`) using `task tag` and create a PR from `release/<version>` to `main`. Once merged, the CD workflows will automatically build and publish the new package to Test PyPI and the new container image to GitHub Container Registry.
+   5. **Deploy**: (*Repository Maintainers only*) Run `task release VERSION=v1.0.0` to create release branch, tag, and auto-create PR. This triggers **CD Python** (Test PyPI) and **CD Docker** (GHCR). Monitor deployments in GitHub Actions, then merge PR if successful.
 
 
 The development workflow is described in more detail in the [Setup & Development Guide](./docs/setup-development-guide.md) and the available commands are summarized in the [Command Cheatsheet](./docs/command-cheatsheet.md).

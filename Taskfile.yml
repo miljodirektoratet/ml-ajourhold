@@ -108,12 +108,20 @@ tasks:
     - echo "Try - task run"
 
   # Version Management
-  tag:
-    desc: 'Create and push a new version tag (usage: task tag VERSION=v1.0.0)'
+  release:
+    desc: 'Create release branch, tag, deploy, and open PR (usage: task release VERSION=v1.0.0)'
     cmds:
-    - git tag ${{ .VERSION }}
-    - git push origin ${{ .VERSION }}
-    - echo "Tagged and pushed ${{ .VERSION }}"
+    - git checkout -b release/{{.VERSION}}
+    - git push origin release/{{.VERSION}}
+    - git tag {{.VERSION}}
+    - git push origin {{.VERSION}}
+    - gh pr create --base main --head release/{{.VERSION}} --title "Release {{.VERSION}}" --body "Automated release PR for {{.VERSION}}. CD workflows have been triggered. Review deployment status in GitHub Actions before merging."
+    - echo "Created and tagged release/{{.VERSION}}"
+    - echo "PR opened: release/{{.VERSION}} → main"
+    - echo "Next steps:"
+    - echo "  1. Monitor CD workflows in GitHub Actions"
+    - echo "  2. If deployment succeeds, merge the PR"
+    - echo "  3. If deployment fails, fix issues and re-tag"
     requires:
       vars: [VERSION]
 
@@ -153,6 +161,6 @@ tasks:
       echo "    task run-docker   # Run in Docker container"
       echo "  Release:"
       echo "    task build        # Build package"
-      echo "    task tag VERSION=v1.0.0  # Create release tag"
+      echo "    task release VERSION=v1.0.0  # Create release and deploy"
       echo ""
       echo "  Use 'task --list' to see all available tasks"
