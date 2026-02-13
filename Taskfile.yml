@@ -109,19 +109,12 @@ tasks:
 
   # Version Management
   release:
-    desc: "Create release branch, tag, deploy, and open PR (usage: task release VERSION=v1.0.0)"
+    desc: "Tag and deploy release from main (usage: task release VERSION=v1.0.0)"
     cmds:
-      - git checkout -b release/{{.VERSION}}
-      - git push origin release/{{.VERSION}}
       - git tag {{.VERSION}}
       - git push origin {{.VERSION}}
-      - gh pr create --base main --head release/{{.VERSION}} --title "Release {{.VERSION}}" --body "Automated release PR for {{.VERSION}}. CD workflows have been triggered. Review deployment status in GitHub Actions before merging." || echo "GitHub CLI not found. Create PR manually at https://github.com/miljodirektoratet/ml-ajourhold/pull/new/release/{{.VERSION}}"
-      - echo "Created and tagged release/{{.VERSION}}"
-      - echo "Next steps:"
-      - echo "  1. Monitor CD workflows in GitHub Actions"
-      - echo "  2. Create PR from release/{{.VERSION}} to main (if not auto-created)"
-      - echo "  3. If deployment succeeds, merge the PR"
-      - echo "  4. If deployment fails, fix issues and re-tag"
+      - echo "Tagged and pushed {{.VERSION}}"
+      - echo "CD workflows triggered. Monitor at https://github.com/miljodirektoratet/ml-ajourhold/actions"
     requires:
       vars: [VERSION]
 

@@ -130,7 +130,7 @@ The development workflow used for this repo consists of the following steps:
       ```
 
    4. **Integrate**: Push branch to GitHub, create a Pull Request to `main`, check GitHub Actions, await review and merge. Tip: if you want to commit without running pre-commit hooks, you can use `git commit --no-verify` or in VS Code navigate to `Source Control` > `...` > `Commit (no verify)`.
-   5. **Deploy**: (*Repository Maintainers only*) Run `task release VERSION=v1.0.0` to create release branch, tag, and auto-create PR. This triggers **CD Python** (GitHub Releases) and **CD Docker** (GHCR). Monitor deployments in GitHub Actions, then merge PR if successful.
+   5. **Deploy**: (*Repository Maintainers only*) Run `task release VERSION=v1.0.0` to tag `main` and trigger deployment. This triggers **CD Python** (GitHub Releases) and **CD Docker** (GHCR). Monitor deployments in [GitHub Actions](https://github.com/miljodirektoratet/ml-ajourhold/actions).
 
 
 The development workflow is described in more detail in the [Setup & Development Guide](./docs/setup-development-guide.md) and the available commands are summarized in the [Command Cheatsheet](./docs/command-cheatsheet.md).

@@ -287,55 +287,45 @@ pre-commit install  # Reinstall hooks
 
 ### 5. Deploy (Maintainers Only)
 
+**Prerequisites:**
+- Ensure all changes are committed to `main`
+- Run `task check` to verify quality checks pass
+- Update version in commit message if using semantic versioning
+
 **Step 1: Create Release and Deploy**
 
 ```bash
-# Create release branch, tag, trigger deployment, and open PR
+# Tag main and trigger deployment
 task release VERSION=v1.0.0
 ```
 
 This command:
-1. Creates release branch `release/v1.0.0`
-2. Pushes the branch to origin
-3. Tags the release branch with `v1.0.0`
-4. Pushes the tag (triggers CD workflows)
-5. Opens PR from `release/v1.0.0` to `main`
+1. Tags `main` branch with `v1.0.0`
+2. Pushes the tag to origin
+3. Triggers CD workflows automatically
 
 **Step 2: Monitor Deployment**
 
-Check GitHub Actions to monitor:
-- **CD Python**: Publishes to GitHub Releases
-- **CD Docker**: Pushes to GitHub Container Registry
+Check [GitHub Actions](https://github.com/miljodirektoratet/ml-ajourhold/actions) to monitor:
+- **CD Python**: Publishes package to GitHub Releases
+- **CD Docker**: Pushes container to GitHub Container Registry
 
-**Step 3: Merge PR**
+**Step 3: Verify Release**
 
-If deployment succeeds:
-1. Review the auto-created PR
-2. Merge to `main`
-3. Release branch auto-deletes
-
-If deployment fails:
-1. Fix issues on release branch
-2. Delete old tag: `git tag -d v1.0.0 && git push origin :refs/tags/v1.0.0`
-3. Re-tag: `git tag v1.0.0 && git push origin v1.0.0`
-4. Monitor CD workflows again
+- Check [Releases](https://github.com/miljodirektoratet/ml-ajourhold/releases) for wheel/sdist files
+- Test installation: `pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@v1.0.0`
 
 **Revert a Release**:
 
-*Before merge to main:*
-
 ```bash
-# Delete tag (stops/prevents deployment)
+# Delete tag locally and remotely
 git tag -d v1.0.0
 git push origin :refs/tags/v1.0.0
 
-# Delete release branch
-git checkout main
-git branch -D release/v1.0.0
-git push origin --delete release/v1.0.0
+# Note: You may need to manually delete the GitHub Release via web UI
 ```
 
-*After deployment:*
+If deployment fails, fix the issue on `main`, then delete and recreate the tag.
 
 > [!WARNING]
 > Deleting a tag after deployment won't unpublish packages. You'll need to:

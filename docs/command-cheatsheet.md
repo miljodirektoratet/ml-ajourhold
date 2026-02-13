@@ -49,7 +49,7 @@ task security               # Run security scans
 
 # Build and release
 task build                  # Build Python package
-task release VERSION=<v.x.x>    # Create release branch, tag, and trigger deployment
+task release VERSION=<v.x.x>    # Tag main and trigger deployment
 ```
 
 ## Code quality commands
