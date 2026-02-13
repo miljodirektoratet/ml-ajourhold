@@ -1,32 +1,18 @@
 name: CD | Python Build and Publish
 
 on:
-  # Publish using GitHub Releases UI
-  release:
-    types: [published]
-  # Publish using git tags, pypi only accepts CLEAN tags (e.g. v1.2.0)
-  # git tag -a v1.2.0 -m "Release v.1.2.0 - Bug fixes and improvements"
-  # git push origin v1.2.0 --> triggers this workflow
+  # Publish using git tags
   push:
     tags:
       - v*.*.*
   workflow_dispatch:
-    inputs:
-      environment:
-        description: Publishing location testpypi or pypi
-        required: true
-        default: testpypi
-        type: choice
-        options:
-          - testpypi
-          # - pypi
 
 permissions:
-  contents: read
+  contents: write # Needed to upload release assets
 
 jobs:
-  build-and-inspect:
-    name: Build & inspect package.
+  build-and-release:
+    name: Build and publish to GitHub Releases
     runs-on: ubuntu-latest
 
     steps:
@@ -34,32 +20,34 @@ jobs:
         with:
           fetch-depth: 0 # Required for setuptools-scm
           persist-credentials: false
-      - uses: hynek/build-and-inspect-python-package@efb823f52190ad02594531168b7a2d5790e66516 # v2.14.0
 
-  upload-to-test-pypi:
-    name: Upload package to Test PyPI
-    needs: build-and-inspect
-    runs-on: ubuntu-latest
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/ml-ajourhold/
-    permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing, but
-      # should NOT be granted anywhere else!
-      id-token: write
+      - name: Build package
+        uses: hynek/build-and-inspect-python-package@efb823f52190ad02594531168b7a2d5790e66516 # v2.14.0
 
-    steps:
-      - name: Download built artifact to dist/
+      - name: Download built artifacts
         uses: actions/download-artifact@v5
         with:
           name: Packages
           path: dist
-      - name: Publish package distributions to TestPyPI
-        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
-        with:
-          repository-url: https://test.pypi.org/legacy/
 
-  # upload-to-pypi:
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          body: |
+            ## Installation
+
+            Install directly from this release:
+            ```bash
+            pip install https://github.com/miljodirektoratet/ml-ajourhold/releases/download/${{ github.ref_name }}/ml_ajourhold-*.whl
+            ```
+
+            Or from the repository:
+            ```bash
+            pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@${{ github.ref_name }}
+            ```
+          fail_on_unmatched_files: true
+
   #   name: Upload package to PyPI
   #   needs: build-and-inspect
   #   runs-on: ubuntu-latest

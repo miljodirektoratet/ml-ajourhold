@@ -40,7 +40,7 @@ Status badges for the CI/CD workflows, for full details on the GitHub Action wor
 | Job | Status | Description |
 |---|---|---|
 | **CI Python** | ![Status](https://img.shields.io/github/actions/workflow/status/miljodirektoratet/ml-ajourhold/ci-python.yml?branch=main&label=&style=flat) | Code quality checks, testing, coverage |
-| **CD Python** | ![Status](https://img.shields.io/github/actions/workflow/status/miljodirektoratet/ml-ajourhold/cd-python.yml?label=&style=flat) | Package deployment to Test PyPI |
+| **CD Python** | ![Status](https://img.shields.io/github/actions/workflow/status/miljodirektoratet/ml-ajourhold/cd-python.yml?label=&style=flat) | Package deployment to GitHub Releases |
 | **CI Docker** | ![Status](https://img.shields.io/github/actions/workflow/status/miljodirektoratet/ml-ajourhold/ci-docker.yml?branch=main&label=&style=flat) | Build and test Docker image |
 | **CD Docker** | ![Status](https://img.shields.io/github/actions/workflow/status/miljodirektoratet/ml-ajourhold/cd-docker.yml?label=&style=flat) | Container deployment to GitHub Registry |
 
@@ -48,15 +48,16 @@ Status badges for the CI/CD workflows, for full details on the GitHub Action wor
 
 ## Installation
 
-The **ml-ajourhold** project is packaged and published to PyPI. You can install this package from [Test PyPI](https://test.pypi.org/project/ml-ajourhold/) or pull the containerized version from [GHCR](https://github.com/miljodirektoratet/ml-ajourhold/pkgs/container/ml-ajourhold).
+The **ml-ajourhold** package is published to GitHub Releases. You can install from GitHub or pull the containerized version from [GHCR](https://github.com/miljodirektoratet/ml-ajourhold/pkgs/container/ml-ajourhold).
 
-> [!NOTE]
-> This package is published to Test PyPI for demonstration purposes. Test PyPI is a testing environment for package deployment without affecting the official PyPI index. If you're using this package in production, ensure it's published to the official PyPI index.
-
-Install the package from Test PyPI:
+**Install from GitHub Release (recommended):**
 
 ```bash
-pip install -i https://test.pypi.org/simple/ml-ajourhold
+# Install latest release
+pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@main
+
+# Or install specific version
+pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@v0.0.1
 ```
 
 ```python
@@ -129,7 +130,7 @@ The development workflow used for this repo consists of the following steps:
       ```
 
    4. **Integrate**: Push branch to GitHub, create a Pull Request to `main`, check GitHub Actions, await review and merge. Tip: if you want to commit without running pre-commit hooks, you can use `git commit --no-verify` or in VS Code navigate to `Source Control` > `...` > `Commit (no verify)`.
-   5. **Deploy**: (*Repository Maintainers only*) Run `task release VERSION=v1.0.0` to create release branch, tag, and auto-create PR. This triggers **CD Python** (Test PyPI) and **CD Docker** (GHCR). Monitor deployments in GitHub Actions, then merge PR if successful.
+   5. **Deploy**: (*Repository Maintainers only*) Run `task release VERSION=v1.0.0` to create release branch, tag, and auto-create PR. This triggers **CD Python** (GitHub Releases) and **CD Docker** (GHCR). Monitor deployments in GitHub Actions, then merge PR if successful.
 
 
 The development workflow is described in more detail in the [Setup & Development Guide](./docs/setup-development-guide.md) and the available commands are summarized in the [Command Cheatsheet](./docs/command-cheatsheet.md).

@@ -304,7 +304,7 @@ This command:
 **Step 2: Monitor Deployment**
 
 Check GitHub Actions to monitor:
-- **CD Python**: Publishes to Test PyPI
+- **CD Python**: Publishes to GitHub Releases
 - **CD Docker**: Pushes to GitHub Container Registry
 
 **Step 3: Merge PR**
@@ -399,6 +399,11 @@ Add to **Settings** > **Secrets and variables** > **Actions**:
 
 ### Test PyPI Publishing
 
+**Note:** This project now publishes to GitHub Releases instead of PyPI. The sections below are kept for reference if you want to configure PyPI publishing.
+
+<details>
+<summary>PyPI Configuration (Optional)</summary>
+
 1. **Create Test PyPI Account**: [test.pypi.org](https://test.pypi.org/)
 
 2. **Create GitHub Environment**:
@@ -412,6 +417,8 @@ Add to **Settings** > **Secrets and variables** > **Actions**:
      - Repository: `ml-ajourhold`
      - Workflow: `cd-python.yml`
      - Environment: `testpypi`
+
+</details>
 
 ### Security & Code Quality
 
@@ -430,7 +437,7 @@ The repository includes automated workflows:
 | Workflow | Trigger | Purpose |
 |----------|---------|---------|
 | **CI Python** | `push`, `pull_request` to `main` | Code quality, testing, coverage |
-| **CD Python** | `push` to `main` with version tags | Deploy to Test PyPI |
+| **CD Python** | `push` to `main` with version tags | Deploy to GitHub Releases |
 | **CI Docker** | `push`, `pull_request` to `main` | Build and test Docker image |
 | **CD Docker** | `push` to `main` with version tags | Deploy to GitHub Registry |
 | **CodeQL Analysis** | `push`, `pull_request`, `schedule` | Security analysis |
