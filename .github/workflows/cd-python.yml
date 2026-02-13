@@ -9,7 +9,7 @@ on:
   # git push origin v1.2.0 --> triggers this workflow
   push:
     tags:
-    - v*.*.*
+      - v*.*.*
   workflow_dispatch:
     inputs:
       environment:
@@ -18,8 +18,8 @@ on:
         default: testpypi
         type: choice
         options:
-        - testpypi
-        - pypi
+          - testpypi
+          - pypi
 
 permissions:
   contents: read
@@ -30,11 +30,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v5
-      with:
-        fetch-depth: 0   # Required for setuptools-scm
-        persist-credentials: false
-    - uses: hynek/build-and-inspect-python-package@efb823f52190ad02594531168b7a2d5790e66516   # v2.14.0
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Required for setuptools-scm
+          persist-credentials: false
+      - uses: hynek/build-and-inspect-python-package@efb823f52190ad02594531168b7a2d5790e66516 # v2.14.0
 
   upload-to-test-pypi:
     name: Upload package to Test PyPI
@@ -49,35 +49,34 @@ jobs:
       id-token: write
 
     steps:
-    - name: Download built artifact to dist/
-      uses: actions/download-artifact@v5
-      with:
-        name: Packages
-        path: dist
-    - name: Publish package distributions to TestPyPI
-      uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e   # v1.13.0
-      with:
-        repository-url: https://test.pypi.org/legacy/
+      - name: Download built artifact to dist/
+        uses: actions/download-artifact@v5
+        with:
+          name: Packages
+          path: dist
+      - name: Publish package distributions to TestPyPI
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
+        with:
+          repository-url: https://test.pypi.org/legacy/
 
+  # upload-to-pypi:
+  #   name: Upload package to PyPI
+  #   needs: build-and-inspect
+  #   runs-on: ubuntu-latest
+  #   if: github.event_name == 'release' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+  #   environment:
+  #     name: pypi
+  #     url: https://pypi.org/p/ml_ajourhold/
+  #   permissions:
+  #     # IMPORTANT: this permission is mandatory for trusted publishing, but
+  #     # should NOT be granted anywhere else!
+  #     id-token: write
 
-  upload-to-pypi:
-    name: Upload package to PyPI
-    needs: build-and-inspect
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
-    environment:
-      name: pypi
-      url: https://pypi.org/p/ml_ajourhold/
-    permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing, but
-      # should NOT be granted anywhere else!
-      id-token: write
-
-    steps:
-    - name: Download built artifact to dist/
-      uses: actions/download-artifact@v5
-      with:
-        name: Packages
-        path: dist
-    - name: Publish package distributions to PyPI
-      uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e   # v1.13.0
+  #   steps:
+  #   - name: Download built artifact to dist/
+  #     uses: actions/download-artifact@v5
+  #     with:
+  #       name: Packages
+  #       path: dist
+  #   - name: Publish package distributions to PyPI
+  #     uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e   # v1.13.0
