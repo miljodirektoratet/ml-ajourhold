@@ -1,29 +1,29 @@
-version: '3'
+version: "3"
 
 vars:
   PROJECT_NAME: ml_ajourhold
-  PYTHON_VERSION: '>=3.12'
+  PYTHON_VERSION: ">=3.12"
 
 tasks:
   # Setup and Installation
   install:
     desc: Install dependencies and setup development environment
     cmds:
-    - uv sync --group dev
-    - task: install-hooks
+      - uv sync --group dev
+      - task: install-hooks
 
   install-hooks:
     desc: Install pre-commit hooks
     cmds:
-    - uv run pre-commit install
+      - uv run pre-commit install
     status:
-    - test -f .git/hooks/pre-commit
+      - test -f .git/hooks/pre-commit
 
   # Code Quality
   pre-commit:
     desc: Run pre-commit hooks on all files
     cmds:
-    - uv run pre-commit run --all-files
+      - uv run pre-commit run --all-files
 
   check:
     desc: Run all code quality checks
@@ -32,96 +32,96 @@ tasks:
   format:
     desc: Format code with Ruff
     cmds:
-    - uv run ruff format
+      - uv run ruff format
 
   lint:
     desc: Run linting checks
     cmds:
-    - uv run ruff check
+      - uv run ruff check
 
   lint-fix:
     desc: Run linting checks and auto-fix issues
     cmds:
-    - uv run ruff check --fix
+      - uv run ruff check --fix
 
   typecheck:
     desc: Run type checking with mypy
     cmds:
-    - uv run mypy src/
+      - uv run mypy src/
 
   deps-check:
     desc: Check for dependency issues
     cmds:
-    - uv run deptry .
+      - uv run deptry .
 
   # Testing
   test:
     desc: Run tests
     cmds:
-    - uv run pytest
+      - uv run pytest
 
   test-cov:
     desc: Run tests with coverage
     cmds:
-    - uv run pytest --cov
+      - uv run pytest --cov
 
   # Build and Release
   build:
     desc: Build the package
     cmds:
-    - uv build
-    - echo "Package built in dist/"
+      - uv build
+      - echo "Package built in dist/"
 
   clean:
     desc: Clean build artifacts and caches
     cmds:
-    - rm -rf dist/ build/ *.egg-info/
-    - rm -rf .pytest_cache/ .mypy_cache/ .ruff_cache/
-    - rm -rf htmlcov/ .coverage coverage.xml
-    - find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+      - rm -rf dist/ build/ *.egg-info/
+      - rm -rf .pytest_cache/ .mypy_cache/ .ruff_cache/
+      - rm -rf htmlcov/ .coverage coverage.xml
+      - find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 
   # Development
   run:
     desc: Run the CLI application
     cmds:
-    - uv run --no-sync ml-ajourhold
+      - uv run --no-sync ml-ajourhold
 
   run-docker:
     desc: Build and run Docker container (development mode with volume mounts)
     cmds:
-    - |
-      echo "Building Docker image..."
-      IMAGE_ID=$(docker build -q .)
-      echo "Running application in container..."
-      docker run --rm --volume .:/app --volume /app/.venv $IMAGE_ID
+      - |
+        echo "Building Docker image..."
+        IMAGE_ID=$(docker build -q .)
+        echo "Running application in container..."
+        docker run --rm --volume .:/app --volume /app/.venv $IMAGE_ID
 
   run-docker-prod:
     desc: Run production container from GitHub Container Registry
     cmds:
-    - docker run --rm ghcr.io/miljodirektoratet/ml-ajourhold:latest
+      - docker run --rm ghcr.io/miljodirektoratet/ml-ajourhold:latest
 
   dev-setup:
     desc: Complete development environment setup
     deps: [install, check]
     cmds:
-    - echo "Development environment ready!"
-    - echo "Try - task run"
+      - echo "Development environment ready!"
+      - echo "Try - task run"
 
   # Version Management
   release:
-    desc: 'Create release branch, tag, deploy, and open PR (usage: task release VERSION=v1.0.0)'
+    desc: "Create release branch, tag, deploy, and open PR (usage: task release VERSION=v1.0.0)"
     cmds:
-    - git checkout -b release/{{.VERSION}}
-    - git push origin release/{{.VERSION}}
-    - git tag {{.VERSION}}
-    - git push origin {{.VERSION}}
-    - gh pr create --base main --head release/{{.VERSION}} --title "Release {{.VERSION}}" --body "Automated release PR for {{.VERSION}}. CD workflows have been triggered. Review deployment status in GitHub Actions before merging."
-    - echo "Created and tagged release/{{.VERSION}}"
-    - echo "PR opened: release/{{.VERSION}} → main"
-    - echo "Next steps:"
-    - echo "  1. Monitor CD workflows in GitHub Actions"
-    - echo "  2. If deployment succeeds, merge the PR"
-    - echo "  3. If deployment fails, fix issues and re-tag"
+      - git checkout -b release/{{.VERSION}}
+      - git push origin release/{{.VERSION}}
+      - git tag {{.VERSION}}
+      - git push origin {{.VERSION}}
+      - gh pr create --base main --head release/{{.VERSION}} --title "Release {{.VERSION}}" --body "Automated release PR for {{.VERSION}}. CD workflows have been triggered. Review deployment status in GitHub Actions before merging."
+      - echo "Created and tagged release/{{.VERSION}}"
+      - echo "PR opened release/{{.VERSION}} → main"
+      - echo "Next steps:"
+      - echo "  1. Monitor CD workflows in GitHub Actions"
+      - echo "  2. If deployment succeeds, merge the PR"
+      - echo "  3. If deployment fails, fix issues and re-tag"
     requires:
       vars: [VERSION]
 
@@ -130,37 +130,37 @@ tasks:
     desc: Simulate CI pipeline locally
     deps: [pre-commit, test-cov]
     cmds:
-    - echo "Local CI simulation complete!"
+      - echo "Local CI simulation complete!"
 
   # Help
   default:
     desc: Show available tasks
     cmds:
-    - task --list-all
+      - task --list-all
 
   help:
     desc: Show detailed help for common workflows
     cmds:
-    - |
-      echo "Common workflows for ml-ajourhold:"
-      echo ""
-      echo "  Development setup:"
-      echo "    task dev-setup    # Complete setup"
-      echo "    task install      # Install dependencies only"
-      echo ""
-      echo "  Code quality:"
-      echo "    task check        # Run all quality checks"
-      echo "    task format       # Format code"
-      echo "    task lint-fix     # Fix linting issues"
-      echo ""
-      echo "  Testing:"
-      echo "    task test         # Run tests"
-      echo ""
-      echo "  Running:"
-      echo "    task run          # Run ml-ajourhold"
-      echo "    task run-docker   # Run in Docker container"
-      echo "  Release:"
-      echo "    task build        # Build package"
-      echo "    task release VERSION=v1.0.0  # Create release and deploy"
-      echo ""
-      echo "  Use 'task --list' to see all available tasks"
+      - |
+        echo "Common workflows for ml-ajourhold:"
+        echo ""
+        echo "  Development setup:"
+        echo "    task dev-setup    # Complete setup"
+        echo "    task install      # Install dependencies only"
+        echo ""
+        echo "  Code quality:"
+        echo "    task check        # Run all quality checks"
+        echo "    task format       # Format code"
+        echo "    task lint-fix     # Fix linting issues"
+        echo ""
+        echo "  Testing:"
+        echo "    task test         # Run tests"
+        echo ""
+        echo "  Running:"
+        echo "    task run          # Run ml-ajourhold"
+        echo "    task run-docker   # Run in Docker container"
+        echo "  Release:"
+        echo "    task build        # Build package"
+        echo "    task release VERSION=v1.0.0  # Create release and deploy"
+        echo ""
+        echo "  Use 'task --list' to see all available tasks"
