@@ -1,7 +1,8 @@
 [project]
 name = "ml-ajourhold"
 description = "A Python project for detecting landcover changes using machine learning. It identifies landscape modifications that are not yet reflected in national geospatial datasets, such as newly built infrastructure."
-license = {file = "LICENSE"}
+license = "MIT"
+license-files = ["LICENSE"]
 readme = "README.md"
 authors = [
   {name = "Willeke A'Campo", email = "willeke.acampo@miljodir.no"}
@@ -33,7 +34,7 @@ requires = ["setuptools>=61", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where =["src"]
+where = ["src"]
 include = ["ml_ajourhold*"]
 
 # SETUPTOOLS-SCM config (dynamic versioning)
