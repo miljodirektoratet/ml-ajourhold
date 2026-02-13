@@ -46,9 +46,9 @@ Summary of PEP8 style rules and enforcement in this repository:
 
 | Category | Practice | Tool | Local check | GHA File | pre-commit | GHA |
 |----------|----------|------|-------------|----------|------------|-----|
-| **Testing** | Unit tests | pytest | `uv run pytest` | `ci-pytest.yml` | ❌ | ✅ |
-| **Testing** | Test coverage | pytest-cov | `uv run pytest --cov` | `ci-pytest.yml` | ❌ | ✅ |
-| **Dependencies** | Dependency analysis | Deptry | `uv run deptry .` | `ci-pytest.yml` | ❌ | ✅ |
+| **Testing** | Unit tests | pytest | `uv run pytest` | `ci-python.yml` | ❌ | ✅ |
+| **Testing** | Test coverage | pytest-cov | `uv run pytest --cov` | `ci-python.yml` | ❌ | ✅ |
+| **Dependencies** | Dependency analysis | Deptry | `uv run deptry .` | `ci-python.yml` | ❌ | ✅ |
 | **Security** | Dependency vulnerabilities | Dependabot | - | `dependabot.yaml` | ❌ | ✅ |
 | **Security** | Code vulnerabilities | CodeQL | - | `scan-codeql.yaml` | ❌ | ✅ |
 

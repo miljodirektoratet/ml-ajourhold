@@ -313,7 +313,9 @@ Check [GitHub Actions](https://github.com/miljodirektoratet/ml-ajourhold/actions
 **Step 3: Verify Release**
 
 - Check [Releases](https://github.com/miljodirektoratet/ml-ajourhold/releases) for wheel/sdist files
-- Test installation: `pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@v1.0.0`
+- Test installation:
+  - **uv environments**: `uv pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@v1.0.0`
+  - **conda/venv**: `pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@v1.0.0`
 
 **Revert a Release**:
 
@@ -379,37 +381,6 @@ docker run --rm ghcr.io/miljodirektoratet/ml-ajourhold:latest
 
 If you fork this repository or create a new one, configure the following:
 
-### Required Secrets
-
-Add to **Settings** > **Secrets and variables** > **Actions**:
-
-| Secret | Purpose | Get From |
-|--------|---------|----------|
-| `CODECOV_TOKEN` | Code coverage reporting | [Codecov](https://codecov.io/) |
-
-### Test PyPI Publishing
-
-**Note:** This project now publishes to GitHub Releases instead of PyPI. The sections below are kept for reference if you want to configure PyPI publishing.
-
-<details>
-<summary>PyPI Configuration (Optional)</summary>
-
-1. **Create Test PyPI Account**: [test.pypi.org](https://test.pypi.org/)
-
-2. **Create GitHub Environment**:
-   - Go to **Settings** > **Environments** > **New environment**
-   - Name: `testpypi`
-
-3. **Configure Trusted Publisher** on Test PyPI:
-   - Navigate to **Account settings** > **Publishing**
-   - Add new pending publisher:
-     - Owner: `miljodirektoratet`
-     - Repository: `ml-ajourhold`
-     - Workflow: `cd-python.yml`
-     - Environment: `testpypi`
-
-</details>
-
 ### Security & Code Quality
 
 Verify in **Settings**:
@@ -427,9 +398,9 @@ The repository includes automated workflows:
 | Workflow | Trigger | Purpose |
 |----------|---------|---------|
 | **CI Python** | `push`, `pull_request` to `main` | Code quality, testing, coverage |
-| **CD Python** | `push` to `main` with version tags | Deploy to GitHub Releases |
+| **CD Python** | Tag push (`v*.*.*`) | Deploy to GitHub Releases |
 | **CI Docker** | `push`, `pull_request` to `main` | Build and test Docker image |
-| **CD Docker** | `push` to `main` with version tags | Deploy to GitHub Registry |
+| **CD Docker** | Tag push (`v*.*.*`) or release published | Deploy to GitHub Registry |
 | **CodeQL Analysis** | `push`, `pull_request`, `schedule` | Security analysis |
 
 ### Branch Protection

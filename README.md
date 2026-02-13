@@ -1,6 +1,6 @@
 # ml-ajourhold
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![TestPyPI](https://img.shields.io/badge/TestPyPI-latest-blue)](https://test.pypi.org/project/ml-ajourhold/) [![Coverage](https://codecov.io/gh/miljodirektoratet/ml-ajourhold/branch/main/graph/badge.svg)](https://codecov.io/gh/miljodirektoratet/ml-ajourhold)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![GitHub Release](https://img.shields.io/github/v/release/miljodirektoratet/ml-ajourhold?logo=python)](https://github.com/miljodirektoratet/ml-ajourhold/releases) [![Docker Image](https://img.shields.io/badge/docker-GHCR-blue?logo=docker)](https://github.com/miljodirektoratet/ml-ajourhold/pkgs/container/ml-ajourhold)
 
 **Table of Contents**
 
@@ -52,6 +52,22 @@ The **ml-ajourhold** package is published to GitHub Releases. You can install fr
 
 **Install from GitHub Release (recommended):**
 
+<details>
+<summary><b>Using uv (recommended for uv-managed environments)</b></summary>
+
+```bash
+# Install latest release
+uv pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@main
+
+# Or install specific version
+uv pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@v0.0.1
+```
+
+</details>
+
+<details>
+<summary><b>Using pip (conda, venv, or system Python)</b></summary>
+
 ```bash
 # Install latest release
 pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@main
@@ -59,6 +75,8 @@ pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@main
 # Or install specific version
 pip install git+https://github.com/miljodirektoratet/ml-ajourhold.git@v0.0.1
 ```
+
+</details>
 
 ```python
 import ml_ajourhold
