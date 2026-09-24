@@ -5,8 +5,8 @@ license = "MIT"
 license-files = ["LICENSE"]
 readme = "README.md"
 authors = [
-  {name = "Willeke A'Campo", email = "willeke.acampo@miljodir.no"},
-  {name = "Syver", email = "syver.jahren.petersen@miljodir.no"}
+  {name = "Syver Jahren Petersen", email = "syver.jahren.petersen@miljodir.no"},
+  {name = "Willeke A'Campo", email = "willeke.acampo@miljodir.no"}
 ]
 requires-python = ">=3.12,<3.13"
 dependencies = [
