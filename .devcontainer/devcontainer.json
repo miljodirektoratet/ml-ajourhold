@@ -65,7 +65,7 @@
 				"ms-vscode-remote.vscode-remote-extensionpack",
 
 				// Container Development
-				"ms-azuretools.vscode-containers", 
+				"ms-azuretools.vscode-containers",
 				"ms-vscode-remote.remote-containers"
 			],
 			"settings": {
@@ -81,7 +81,7 @@
 					"activityBar.background": "#181818",
 					"titleBar.activeBackground": "#181818",
 					"titleBar.activeForeground": "#cccccc"
-				},  
+				},
 
 				// Python formatting
 				"[python]": {
@@ -96,7 +96,7 @@
 
 				// Python Docstrings
 				"autoDocstring.docstringFormat": "one-line-sphinx",
-				
+
 				// Python other settings
 				"python.useEnvironmentsExtension": false, // Use Python Envy instead
 
@@ -136,7 +136,7 @@
 				"git.allowNoVerifyCommit": true,
 
 				// Docker
-				"containers.contexts.showInStatusBar": true,				
+				"containers.contexts.showInStatusBar": true,
 			}
 		}
 	},
