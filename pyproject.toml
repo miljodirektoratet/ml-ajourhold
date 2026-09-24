@@ -93,17 +93,32 @@ fallback_version = "0.0.0"
 [tool.deptry]
 known_first_party = ["ml_ajourhold"]  # ignore local package
 
+[tool.deptry.package_module_name_map]
+"cupy-cuda13x" = "cupy"
+"pillow" = "PIL"
+
 [tool.deptry.per_rule_ignores]
 DEP002 = [
+  "geopandas",
   "gdal",
+  "huggingface_hub",
   "ipykernel",
+  "numpy",
   "pandas",
   "pyarrow",
+  "psutil",
   "pyogrio",
+  "pystac-client",
+  "rasterio",
   "scikit-learn",
+  "shapely",
   "scipy",
   "tqdm",
   "xgboost",
+]
+DEP004 = [
+  "torch",
+  "torchvision",
 ]
 
 # PYTEST config
