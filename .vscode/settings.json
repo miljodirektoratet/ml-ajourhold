@@ -1,6 +1,10 @@
 // Local VS Code Extension Configurations
 // Not used by Devcontainer instead configs are listed in .devcontainer/devcontainer.json
 {
+  "files.associations": {
+    "**/CODEOWNERS": "plaintext"
+  },
+
   // Terminal
   "terminal.integrated.defaultProfile.windows": "Command Prompt",
   "terminal.integrated.defaultProfile.linux": "Bash",
@@ -14,19 +18,43 @@
     "activityBar.background": "#181818",
     "titleBar.activeBackground": "#181818",
     "titleBar.activeForeground": "#cccccc"
-  },  
+  },
 
   // Python formatting
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,
   },
+  "autoDocstring.docstringFormat": "one-line-sphinx",
+
+  // Python Environment settings
+  // Python Environment settings
+  "python.useEnvironmentsExtension": false,
+  "python.terminal.activateEnvironment": true,
+  // Pixi default
+  // "python.defaultInterpreterPath": "${workspaceFolder}/.pixi/envs/gpu/python.exe",
+  // UV default
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv",
+  // Conda ArcGIS Pro default
+  //"python.defaultInterpreterPath": "${env:USERPROFILE}\\AppData\\Local\\ESRI\\conda\\envs\\arcgis-azure-v35\\python.exe",
+
+  // Keep UV available for non-ArcPy scripts and Ruff.
+  // Both the local UV .venv and ArcGIS Conda environments remain discoverable.
+  // This default makes Pylance resolve ArcPy using the ArcGIS environment.
+  // "python-envs.pythonProjects": [
+  //   {
+  //     "path": ".",
+  //     "envManager": "ms-python.python:system",
+  //     "packageManager": "ms-python.python:pip"
+  //   }
+  // ],
+
+  // Ruff formatting
+  "ruff.importStrategy": "useBundled",
   "ruff.interpreter": [
     ".venv/Scripts/python",
     ".venv/bin/python",
   ],
-  "autoDocstring.docstringFormat": "one-line-sphinx",
-  "python.useEnvironmentsExtension": true, // Use Python Envy instead
 
   // YAML formatting
   "[yaml]": {
@@ -39,6 +67,8 @@
     "editor.formatOnSave": true,
     "editor.tabSize": 2
   },
+  "prettier.printWidth": 88,
+  "prettier.proseWrap": "always",
 
   // TOML formatting
   "[toml]": {
@@ -63,8 +93,14 @@
   "git.branchProtection": ["main"],
   "git.allowNoVerifyCommit": true,
   "git.confirmNoVerifyCommit": false,
-  
+
   // Docker
   "containers.contexts.showInStatusBar": true,
-  
+
+  // PlantUML - choose local (java and must be installed) or server
+  // "plantuml.render": "Local",
+
+  "[plaintext]": {
+    "editor.formatOnSave": false
+  },
 }

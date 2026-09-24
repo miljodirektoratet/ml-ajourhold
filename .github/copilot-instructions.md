@@ -8,7 +8,7 @@ File location: `.github/copilot-instructions.md`
 
 Important folders:
 
-- 
+-
 
 Tech stack: Python, UV, PyTorch
 
@@ -39,12 +39,12 @@ Tech stack: Python, UV, PyTorch
 
 ## Python
 
-- package manager default: uv 
+- package manager default: uv
 - package manager arcpy (ArcGIS Pro): conda
 
 ### Python: UV environment setup
 - pyproject.toml available: `uv sync`
-- no pyproject.toml available: 
+- no pyproject.toml available:
 
     ```bash
     # workspace root

@@ -63,7 +63,8 @@ tasks:
   test-cov:
     desc: Run tests with coverage
     cmds:
-      - uv run pytest --cov
+      - rm -f .coverage .coverage.*
+      - uv run pytest
 
   # Build and Release
   build:
@@ -114,7 +115,8 @@ tasks:
       - git tag {{.VERSION}}
       - git push origin {{.VERSION}}
       - echo "Tagged and pushed {{.VERSION}}"
-      - echo "CD workflows triggered. Monitor at https://github.com/miljodirektoratet/ml-ajourhold/actions"
+      - echo "CD workflows triggered. Monitor at
+        https://github.com/miljodirektoratet/ml-ajourhold/actions"
     requires:
       vars: [VERSION]
 

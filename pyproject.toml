@@ -5,16 +5,48 @@ license = "MIT"
 license-files = ["LICENSE"]
 readme = "README.md"
 authors = [
+  {name = "Syver Jahren Petersen", email = "syver.jahren.petersen@miljodir.no"},
   {name = "Willeke A'Campo", email = "willeke.acampo@miljodir.no"}
 ]
-requires-python = ">=3.12"
-dependencies = []
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "ipykernel>=6.29.5,<8",
+  "rasterio>=1.4.3,<2",
+  "shapely>=2.1.2,<3",
+  "pyarrow>=20.0.0,<25",
+  "numpy>=2.4.6,<3",
+  "pandas>=3.0.3,<4",
+  "scipy>=1.17.1,<2",
+  "scikit-learn>=1.9.0,<2",
+  "xgboost>=3.2.0,<4",
+  # Cross-platform GDAL pinning: Linux container uses Debian libgdal 3.6.2, Windows uses newer wheel builds.
+  "gdal==3.6.2; sys_platform != 'win32'",
+  "gdal>=3.10.3,<4; sys_platform == 'win32'",
+  "tqdm>=4.68.3,<5",
+  "pystac-client>=0.8",
+  "psutil>=5.9",
+  "pyogrio>=0.9",
+  "huggingface_hub>=0.27",
+  "geopandas>=1.1.3,<2",
+]
 dynamic = ["version"]
 
 [project.scripts]
 ml-ajourhold = "ml_ajourhold:main"
 
 [dependency-groups]
+cpu = [
+  "torch==2.12.0",
+  "torchvision==0.27.0",
+]
+gpu = [
+  "torch==2.12.0+cu132",
+  "torchvision==0.27.0+cu132",
+  "pillow==12.3.0",
+  "lightning>=2.6.5,<3",
+  "cupy-cuda13x>=14.1.1,<15",
+  "setuptools<82",
+]
 dev = [
   "deptry>=0.23.1",
   "ipykernel>=6.29.5,<8",
@@ -28,6 +60,21 @@ dev = [
   "setuptools-scm>=9.2.0",
   "zizmor>=1.14.2",
 ]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu132", group = "gpu" }]
+torchvision = [{ index = "pytorch-cu132", group = "gpu" }]
+gdal = { index = "geospatial_wheels", marker = "sys_platform == 'win32'" }
+
+[[tool.uv.index]]
+name = "pytorch-cu132"
+url = "https://download.pytorch.org/whl/cu132"
+explicit = true
+
+[[tool.uv.index]]
+name = "geospatial_wheels"
+url = "https://nathanjmcdougall.github.io/geospatial-wheels-index/"
+explicit = true
 
 [build-system]
 requires = ["setuptools>=61", "setuptools-scm"]
@@ -45,6 +92,34 @@ fallback_version = "0.0.0"
 # DEPTRY config
 [tool.deptry]
 known_first_party = ["ml_ajourhold"]  # ignore local package
+
+[tool.deptry.package_module_name_map]
+"cupy-cuda13x" = "cupy"
+"pillow" = "PIL"
+
+[tool.deptry.per_rule_ignores]
+DEP002 = [
+  "geopandas",
+  "gdal",
+  "huggingface_hub",
+  "ipykernel",
+  "numpy",
+  "pandas",
+  "pyarrow",
+  "psutil",
+  "pyogrio",
+  "pystac-client",
+  "rasterio",
+  "scikit-learn",
+  "shapely",
+  "scipy",
+  "tqdm",
+  "xgboost",
+]
+DEP004 = [
+  "torch",
+  "torchvision",
+]
 
 # PYTEST config
 [tool.pytest]
