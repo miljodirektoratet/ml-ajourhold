@@ -1,12 +1,14 @@
 // Local VS Code Extension Recommendations
-// Not used by Devcontainer instead recommendations are listed in .devcontainer/devcontainer.json
+// Commented extensions are optional and can be enabled for specific workflows.
 {
   "recommendations": [
     // Python extensions
     "ms-python.python",
     "ms-python.debugpy",
     "ms-python.vscode-pylance",
-    "teticio.python-envy",
+    "teticio.python-envy", // python env manager for uv projects
+    //"ms-python.vscode-python-envs" // python env better suited for conda
+    //"renan-r-santos.pixi-code",  // pixi python env manager support
 
     // Jupyter Notebooks
     "ms-toolsai.jupyter",
@@ -18,24 +20,40 @@
     // Git and Version Control
     "mhutchie.git-graph",
     "donjayamanne.githistory",
+    "github.vscode-pull-request-github",
 
     // File support and linters
     "tamasfe.even-better-toml",
+    "redhat.vscode-yaml", // schema validation + intellisense for yml config files
     "bierner.markdown-mermaid",
     "yzhang.markdown-all-in-one",
     "njpwerner.autodocstring",
-    "esbenp.prettier-vscode", // yaml, markdown
+    "esbenp.prettier-vscode", // formatting for yaml/markdown and more
     "charliermarsh.ruff", // python linter
-    "PKief.material-icon-theme",
+    //"samuelcolvin.jinjahtml", // Jinja template support
+    //"ms-python.mypy-type-checker", // type checker
 
-    // Data Display and Manipulation
+    // Data and Databases
     "ms-toolsai.datawrangler",
+    //"ms-ossdata.vscode-pgsql", // PostgreSQL support
+    //"grapecity.gc-excelviewer", // Excel files
+    //"mechatroner.rainbow-csv", // CSV files
+
+    // Diagrams
+    "jebbs.plantuml",
+    //"hediet.vscode-drawio",
+    //"PKief.material-icon-theme",
 
     // SSH and Remote Development
     "ms-vscode-remote.vscode-remote-extensionpack",
 
     // Container Development
-    "ms-azuretools.vscode-containers", 
-    "ms-vscode-remote.remote-containers"
+    "ms-azuretools.vscode-containers",
+    "ms-vscode-remote.remote-containers",
+
+    // Terminal
+    //"ms-vscode.powershell",
+    //"nilssoderman.batch-runner"
+
   ]
 }
