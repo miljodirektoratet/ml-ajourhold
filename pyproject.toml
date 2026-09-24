@@ -19,7 +19,9 @@ dependencies = [
   "scipy>=1.17.1,<2",
   "scikit-learn>=1.9.0,<2",
   "xgboost>=3.2.0,<4",
-  "gdal>=3.10.3,<4",
+  # Cross-platform GDAL pinning: Linux container uses Debian libgdal 3.6.2, Windows uses newer wheel builds.
+  "gdal==3.6.2; sys_platform != 'win32'",
+  "gdal>=3.10.3,<4; sys_platform == 'win32'",
   "tqdm>=4.68.3,<5",
   "pystac-client>=0.8",
   "psutil>=5.9",
@@ -90,6 +92,19 @@ fallback_version = "0.0.0"
 # DEPTRY config
 [tool.deptry]
 known_first_party = ["ml_ajourhold"]  # ignore local package
+
+[tool.deptry.per_rule_ignores]
+DEP002 = [
+  "gdal",
+  "ipykernel",
+  "pandas",
+  "pyarrow",
+  "pyogrio",
+  "scikit-learn",
+  "scipy",
+  "tqdm",
+  "xgboost",
+]
 
 # PYTEST config
 [tool.pytest]

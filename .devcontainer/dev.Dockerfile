@@ -13,6 +13,9 @@ ENV UV_LINK_MODE=copy
 # Ensure installed tools can be executed out of the box
 ENV UV_TOOL_BIN_DIR=/usr/local/bin
 
+# GDAL Python package may build from source on Linux; install native libs plus compiler toolchain.
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential gdal-bin libgdal-dev && rm -rf /var/lib/apt/lists/*
+
 # Cache bind: install the .venv (including dev dependencies)
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
