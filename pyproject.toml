@@ -13,14 +13,14 @@ dependencies = [
   "ipykernel>=6.29.5,<8",
   "rasterio>=1.4.3,<2",
   "shapely>=2.1.2,<3",
-  "pyarrow>=20.0.0,<25",
+  "pyarrow>=20.0.0,<27",
   "numpy>=2.4.6,<3",
   "pandas>=3.0.3,<4",
   "scipy>=1.17.1,<2",
   "scikit-learn>=1.9.0,<2",
   "xgboost>=3.2.0,<4",
   # Cross-platform GDAL pinning: Linux container uses Debian libgdal 3.6.2, Windows uses newer wheel builds.
-  "gdal==3.6.2; sys_platform != 'win32'",
+  "gdal==3.13.3; sys_platform != 'win32'",
   "gdal>=3.10.3,<4; sys_platform == 'win32'",
   "tqdm>=4.68.3,<5",
   "pystac-client>=0.8",
@@ -42,10 +42,10 @@ cpu = [
 gpu = [
   "torch==2.12.0+cu132",
   "torchvision==0.27.0+cu132",
-  "pillow==12.3.0",
+  "pillow==13.0.0",
   "lightning>=2.6.5,<3",
   "cupy-cuda13x>=14.1.1,<15",
-  "setuptools<82",
+  "setuptools<85",
 ]
 dev = [
   "deptry>=0.23.1",
