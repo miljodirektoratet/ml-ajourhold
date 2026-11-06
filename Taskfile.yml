@@ -63,7 +63,8 @@ tasks:
   test-cov:
     desc: Run tests with coverage
     cmds:
-      - rm -f .coverage .coverage.*
+      - uv run python -c "from pathlib import Path; [p.unlink() for p in
+        Path('.').glob('.coverage*') if p.is_file()]"
       - uv run pytest
 
   # Build and Release
